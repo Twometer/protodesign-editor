@@ -3,22 +3,24 @@ package de.twometer.protoedit.ui;
 import de.twometer.protoedit.parsers.ParserManager;
 import de.twometer.protoedit.util.IOUtil;
 import de.twometer.protoedit.util.ResourceLoader;
+import de.twometer.protoedit.util.RetentionFileChooser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Bounds;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextArea;
+import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.fxmisc.richtext.CodeArea;
 
 import java.io.File;
 
 public class MainController {
 
     @FXML
-    public CodeArea markdownArea;
+    public TextArea markdownArea;
 
     @FXML
     public WebView previewArea;
@@ -31,11 +33,27 @@ public class MainController {
 
     private String currentPath = null;
 
+    private Text text = new Text();
+
+    private Bounds bounds;
+
     @FXML
     public void initialize() {
         engine = previewArea.getEngine();
         engine.setUserStyleSheetLocation(ResourceLoader.getResource("layout/main.css").toString());
         markdownArea.setOnKeyTyped(event -> refreshPreview());
+        markdownArea.setWrapText(true);
+        text.fontProperty().bind(markdownArea.fontProperty());
+        text.textProperty().bind(markdownArea.textProperty());
+        text.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> bounds = newValue);
+        markdownArea.scrollTopProperty().addListener((observable, oldValue, newValue) -> {
+            double previewHeight = Double.parseDouble(previewArea.getEngine().executeScript("window.getComputedStyle(document.body, null).getPropertyValue('height')").toString().replace("px", ""));
+            double areaHeight = bounds.getHeight() * 2;
+            double pcx = newValue.doubleValue() / areaHeight;
+            double newY = pcx * previewHeight;
+            previewArea.getEngine().executeScript("window.scrollTo(0, " + newY + ");");
+        });
+
     }
 
     public void setStage(Stage stage) {
@@ -47,10 +65,7 @@ public class MainController {
     }
 
     public void onOpenFile(ActionEvent actionEvent) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open file");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Markdown files", "*.md", "*.markdown", "*.mdown"));
-        File file = fileChooser.showOpenDialog(stage);
+        File file = RetentionFileChooser.showOpenDialog(stage);
         if (file == null) return;
         String contents = IOUtil.readFile(file);
         loadFile(contents);
@@ -76,7 +91,7 @@ public class MainController {
     }
 
     private void setContents(String content) {
-        markdownArea.replaceText(content);
+        markdownArea.setText(content);
         lastSavedContents = content;
         refreshPreview();
     }
@@ -93,10 +108,7 @@ public class MainController {
             IOUtil.writeFile(new File(currentPath), markdownArea.getText());
             lastSavedContents = markdownArea.getText();
         } else {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Save file");
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Markdown files", "*.md", "*.markdown", "*.mdown"));
-            File file = fileChooser.showSaveDialog(stage);
+            File file = RetentionFileChooser.showSaveDialog(stage);
             if (file == null) return;
             currentPath = file.getAbsolutePath();
             saveFile();

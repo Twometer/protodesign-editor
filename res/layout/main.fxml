@@ -6,8 +6,6 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
-<?import org.fxmisc.flowless.VirtualizedScrollPane?>
-<?import org.fxmisc.richtext.CodeArea?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.191"
       fx:controller="de.twometer.protoedit.ui.MainController">
     <!--<MenuBar VBox.vgrow="NEVER">
@@ -48,11 +46,8 @@
     </ToolBar>
     <SplitPane dividerPositions="0.5" focusTraversable="true"
                VBox.vgrow="ALWAYS">
-        <VirtualizedScrollPane>
-            <content>
-                <CodeArea fx:id="markdownArea" style="-fx-font-family: monospace;"/>
-            </content>
-        </VirtualizedScrollPane>
+        <TextArea fx:id="markdownArea"
+                  style="-fx-font-family: Consolas; -fx-focus-color: transparent; -fx-font-size: 15px"/>
         <WebView fx:id="previewArea"/>
     </SplitPane>
     <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
