@@ -21,7 +21,7 @@ public class ProtoeditMain extends Application {
         MainController controller = loader.getController();
         controller.setStage(primaryStage);
 
-        primaryStage.setTitle("Protodesign Editor");
+        primaryStage.setTitle("Protodesign Editor v1.0.0");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
