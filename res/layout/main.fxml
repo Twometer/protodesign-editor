@@ -5,7 +5,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.191">
+<?import javafx.scene.web.WebView?>
+<?import org.fxmisc.flowless.VirtualizedScrollPane?>
+<?import org.fxmisc.richtext.CodeArea?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.191"
+      fx:controller="de.twometer.protoedit.ui.MainController">
     <MenuBar VBox.vgrow="NEVER">
         <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" text="New"/>
@@ -40,25 +44,14 @@
     <ToolBar prefHeight="40.0" prefWidth="200.0">
         <Button mnemonicParsing="false" text="Button"/>
     </ToolBar>
-    <SplitPane dividerPositions="0.2505567928730512" focusTraversable="true"
+    <SplitPane dividerPositions="0.5" focusTraversable="true"
                VBox.vgrow="ALWAYS">
-        <AnchorPane>
-            <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0"
-                   style="&#10;" text="Master" textAlignment="CENTER">
-                <font>
-                    <Font size="18.0" fx:id="x1"/>
-                </font>
-                <textFill>
-                    <Color blue="0.624" green="0.624" red="0.624" fx:id="x2"/>
-                </textFill>
-            </Label>
-        </AnchorPane>
-        <ScrollPane>
-            <AnchorPane id="Content" prefHeight="545.0" prefWidth="430.0">
-                <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;"
-                       text="View" textAlignment="CENTER" textFill="$x2"/>
-            </AnchorPane>
-        </ScrollPane>
+        <VirtualizedScrollPane>
+            <content>
+                <CodeArea fx:id="markdownArea" style="-fx-font-family: monospace;"/>
+            </content>
+        </VirtualizedScrollPane>
+        <WebView fx:id="previewArea"/>
     </SplitPane>
     <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
         <padding>

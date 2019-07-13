@@ -1,0 +1,40 @@
+.csharp-keyword {
+    color: #0000FF;
+}
+
+.csharp-datatype {
+    color: #2B91AF;
+}
+
+.csharp-string {
+    color: #A31515;
+}
+
+.csharp-comment {
+    color: #008000;
+}
+
+.vpsl-datatype {
+    color: #548dd4;
+}
+
+.vpsl-condition {
+    color: #00b050;
+}
+
+.vpsl-comment {
+    color: #808080;
+}
+
+.vpsl-annotation {
+    color: #2B91AF;
+}
+
+pre {
+    background-color: rgb(245, 245, 245);
+    border: 1px solid rgb(204, 204, 204);
+}
+
+body {
+    font-family: "Calibri Light";
+}
