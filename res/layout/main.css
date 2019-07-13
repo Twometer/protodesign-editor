@@ -31,10 +31,40 @@
 }
 
 pre {
+    padding: 10px;
     background-color: rgb(245, 245, 245);
     border: 1px solid rgb(204, 204, 204);
 }
 
 body {
-    font-family: "Calibri Light";
+    font-family: "Segoe UI";
+}
+
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0.5rem;
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: 2.34375rem;
+}
+
+h2 {
+    font-size: 1.875rem;
+}
+
+h3 {
+    font-size: 1.640625rem;
+}
+
+h5 {
+    font-size: 1.171875rem;
 }
